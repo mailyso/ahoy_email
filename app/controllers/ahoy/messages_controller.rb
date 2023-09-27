@@ -37,7 +37,7 @@ module Ahoy
       if ActiveSupport::SecurityUtils.secure_compare(user_signature, signature)
         publish :click, url: params[:url]
 
-        redirect_to url
+        redirect_to url, allow_other_host: true
       else
         # TODO show link expired page with link to invalid redirect url in 2.0
         redirect_to AhoyEmail.invalid_redirect_url || main_app.root_url

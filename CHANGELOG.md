@@ -1,3 +1,7 @@
+## 1.1.2 (2023-09-27)
+
+- Fix `ActionController::Redirecting::UnsafeRedirectError` in click redirection.
+
 ## 1.1.1 (2021-03-06)
 
 - Added support for classes for subscribers

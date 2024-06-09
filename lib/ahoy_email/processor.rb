@@ -75,7 +75,7 @@ module AhoyEmail
         if raw_source.match(regex)
           part.body = raw_source.gsub(regex, "#{pixel}\\0")
         else
-          part.body = raw_source + pixel
+          part.body = pixel + raw_source
         end
       end
     end

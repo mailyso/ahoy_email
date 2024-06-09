@@ -61,7 +61,7 @@ module AhoyEmail
         part = message.html_part || message
         raw_source = part.body.raw_source
 
-        regex = /<\/body>/i
+        regex = /<body>/i
         url =
           url_for(
             controller: "ahoy/messages",
@@ -73,7 +73,7 @@ module AhoyEmail
 
         # try to add before body tag
         if raw_source.match(regex)
-          part.body = raw_source.gsub(regex, "#{pixel}\\0")
+          part.body = raw_source.gsub(regex, "\\0#{pixel}")
         else
           part.body = pixel + raw_source
         end

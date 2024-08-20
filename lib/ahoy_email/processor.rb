@@ -70,10 +70,11 @@ module AhoyEmail
             format: "gif"
           )
         pixel = ActionController::Base.helpers.image_tag(url, size: "1x1", alt: "")
+        pixel = "#{pixel}<br>"
 
         # try to add before body tag
         if raw_source.match(regex)
-          part.body = raw_source.gsub(regex, "\\0#{pixel}")
+          part.body = raw_source.gsub(regex, "#{pixel}\\0")
         else
           part.body = pixel + raw_source
         end

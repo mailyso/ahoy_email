@@ -74,9 +74,9 @@ module AhoyEmail
 
         # try to add before body tag
         if raw_source.match(regex)
-          part.body = raw_source.gsub(regex, "\\0#{pixel}")
+          part.body = raw_source.gsub(regex, "#{pixel}\\0")
         else
-          part.body = pixel + raw_source
+          part.body = raw_source + pixel
         end
       end
     end

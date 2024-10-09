@@ -68,7 +68,8 @@ module AhoyEmail
         part = message.html_part || message
         raw_source = part.body.raw_source
 
-        regex = /<\/body>/i
+        regex = /<body>/i
+        trackable_regex = /<trackable>/i
         url =
           url_for(
             controller: "ahoy/messages",
@@ -77,13 +78,14 @@ module AhoyEmail
             format: "gif"
           )
         pixel = ActionController::Base.helpers.image_tag(url, size: "1x1", alt: "")
-        pixel = "#{pixel}<br>"
 
         # try to add before body tag
-        if raw_source.match(regex)
-          part.body = raw_source.gsub(regex, "#{pixel}\\0")
+        if raw_source.match(trackable_regex)
+          part.body = raw_source.gsub(trackable_regex, "\\0#{pixel}")
+        elsif raw_source.match(regex)
+          part.body = raw_source.gsub(regex, "\\0#{pixel}")
         else
-          part.body = raw_source + pixel
+          part.body = pixel + raw_source
         end
       end
     end

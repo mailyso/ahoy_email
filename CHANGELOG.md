@@ -1,3 +1,6 @@
+## 1.1.6 (2024-10-09)
+- Added `trackable_regex` option to allow custom positioning of the tracking pixel within the `<trackable>` tag.
+
 ## 1.1.5 (2024-10-09)
 - Add `Url Params` for custom shared parameters.
 

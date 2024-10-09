@@ -1,3 +1,6 @@
+## 1.1.5 (2024-10-09)
+- Add `Url Params` for custom shared parameters.
+
 ## 1.1.2 (2023-09-27)
 
 - Fix `ActionController::Redirecting::UnsafeRedirectError` in click redirection.

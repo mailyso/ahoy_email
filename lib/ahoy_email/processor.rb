@@ -14,7 +14,7 @@ module AhoyEmail
 
     def perform
       track_open if options[:open]
-      track_links if options[:utm_params] || options[:click]
+      track_links if options[:utm_params] || options[:click] || options[:url_params]
       track_message
     end
 
@@ -50,6 +50,13 @@ module AhoyEmail
       if options[:utm_params]
         UTM_PARAMETERS.map(&:to_sym).each do |k|
           data[k] = options[k] if options[k]
+        end
+      end
+
+      if options[:url_params].present?
+        options[:url_params].each do |k, v|
+          next if data.has_key?(k) # 이미 정의 된 파라미터의 경우 무시
+          data[k] = v if v.present?
         end
       end
 
@@ -96,6 +103,16 @@ module AhoyEmail
             UTM_PARAMETERS.each do |key|
               next if params.any? { |k, _v| k == key } || !options[key.to_sym]
               params << [key, options[key.to_sym]]
+            end
+            uri.query_values = params
+            link["href"] = uri.to_s
+          end
+
+          if options[:url_params].present? && !skip_attribute?(link, "tag-params")
+            params = uri.query_values(Array) || []
+            options[:url_params].each do |key, value|
+              next if params.any? { |k, _v| k == key } || value.blank?
+              params << [key, value]
             end
             uri.query_values = params
             link["href"] = uri.to_s
